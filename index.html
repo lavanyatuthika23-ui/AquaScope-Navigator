@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaScope Navigator - Advanced Marine Intelligence Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="wave-animation">
+            <div class="wave wave1"></div>
+            <div class="wave wave2"></div>
+            <div class="wave wave3"></div>
+        </div>
+        <div class="loading-text">
+            <h2>AquaScope Navigator</h2>
+            <p>Initializing Marine Intelligence System...</p>
+        </div>
+    </div>
+
+    <!-- Particle Background -->
+    <div id="particleCanvas" class="particle-canvas"></div>
+
+    <!-- Navigation Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <i class="fas fa-anchor logo-icon"></i>
+                    <h1>AquaScope Navigator</h1>
+                </div>
+                <nav class="main-nav">
+                    <button class="nav-btn active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button class="nav-btn" data-section="voice-assistant">
+                        <i class="fas fa-microphone"></i>
+                        <span>Voice Assistant</span>
+                    </button>
+                    <button class="nav-btn" data-section="marine-map">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Marine Map</span>
+                    </button>
+                    <button class="nav-btn" data-section="fish-id">
+                        <i class="fas fa-fish"></i>
+                        <span>Fish ID</span>
+                    </button>
+                    <button class="nav-btn" data-section="weather">
+                        <i class="fas fa-cloud-sun"></i>
+                        <span>Weather</span>
+                    </button>
+                </nav>
+                <div class="header-controls">
+                    <button id="languageBtn" class="control-btn language-btn">
+                        <i class="fas fa-globe"></i>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div id="languageDropdown" class="language-dropdown hidden">
+                        <button class="language-option" data-lang="en">
+                            <span class="flag">🇺🇸</span>
+                            <span>English</span>
+                        </button>
+                        <button class="language-option" data-lang="te">
+                            <span class="flag">🇮🇳</span>
+                            <span>తెలుగు</span>
+                        </button>
+                        <button class="language-option" data-lang="hi">
+                            <span class="flag">🇮🇳</span>
+                            <span>हिंदी</span>
+                        </button>
+                        <button class="language-option" data-lang="ta">
+                            <span class="flag">🇮🇳</span>
+                            <span>தமிழ்</span>
+                        </button>
+                        <button class="language-option" data-lang="kn">
+                            <span class="flag">🇮🇳</span>
+                            <span>ಕನ್ನಡ</span>
+                        </button>
+                        <button class="language-option" data-lang="ml">
+                            <span class="flag">🇮🇳</span>
+                            <span>മലയാളം</span>
+                        </button>
+                    </div>
+                    <button id="themeToggle" class="control-btn">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button id="signInBtn" class="btn btn--primary sign-in-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Sign In</span>
+                    </button>
+                    <button id="settingsBtn" class="control-btn">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section active">
+            <div class="container">
+                <div class="welcome-banner">
+                    <h2 id="welcomeText">Welcome to AquaScope Navigator - Your AI Marine Assistant</h2>
+                   
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card temperature-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-thermometer-half"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>24.8°C</h3>
+                            <p>Avg Temperature</p>
+                            <span class="stat-trend positive">+2.1°</span>
+                        </div>
+                    </div>
+                    <div class="stat-card salinity-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>35.1 PSU</h3>
+                            <p>Salinity Level</p>
+                            <span class="stat-trend neutral">±0.3</span>
+                        </div>
+                    </div>
+                    <div class="stat-card wind-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>15.8 kt</h3>
+                            <p>Wind Speed</p>
+                            <span class="stat-trend negative">-3.2 kt</span>
+                        </div>
+                    </div>
+                    <div class="stat-card wave-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>2.4 m</h3>
+                            <p>Wave Height</p>
+                            <span class="stat-trend positive">+0.5 m</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h3>Marine Conditions</h3>
+                            <div class="chart-controls">
+                                <button class="btn btn--sm btn--outline">24H</button>
+                                <button class="btn btn--sm btn--primary">7D</button>
+                                <button class="btn btn--sm btn--outline">30D</button>
+                            </div>
+                        </div>
+                        <div class="chart-container" style="position: relative; height: 300px;">
+                            <canvas id="marineChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="card-header">
+                            <h3>Station Distribution</h3>
+                        </div>
+                        <div class="chart-container" style="position: relative; height: 300px;">
+                            <canvas id="stationChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Safety Alerts -->
+                <div class="alerts-section">
+                    <h3>Safety Alerts</h3>
+                    <div id="alertsContainer" class="alerts-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Voice Assistant Section -->
+        <section id="voice-assistant" class="content-section">
+            <div class="container">
+                <div class="voice-assistant-container">
+                    <div class="voice-interface">
+                        <div class="voice-visualizer">
+                            <div class="voice-circle">
+                                <i class="fas fa-microphone voice-icon"></i>
+                                <div class="pulse-ring"></div>
+                                <div class="pulse-ring delay-1"></div>
+                                <div class="pulse-ring delay-2"></div>
+                            </div>
+                        </div>
+                        <div class="voice-controls">
+                            <button id="voiceBtn" class="btn btn--primary btn--lg voice-btn">
+                                <i class="fas fa-microphone"></i>
+                                <span>Start Voice Command</span>
+                            </button>
+                            <p id="voicePrompt" class="voice-prompt">Speak your query or type below</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-interface">
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="message assistant-message">
+                                <div class="message-avatar">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="message-content">
+                                    <p>Hello! I'm your marine AI assistant. How can I help You</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-container">
+                            <div class="input-group">
+                                <input type="text" id="chatInput" class="form-control chat-input" placeholder="Type your message here...">
+                                <div class="input-suggestions" id="inputSuggestions"></div>
+                                <button id="sendBtn" class="btn btn--primary">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marine Map Section -->
+        <section id="marine-map" class="content-section">
+            <div class="container">
+                <div class="map-container">
+                    <div class="map-header">
+                        <h3>Interactive Marine Map</h3>
+                        <div class="map-controls">
+                            <button class="btn btn--outline btn--sm" id="toggleStations">
+                                <i class="fas fa-broadcast-tower"></i> Stations
+                            </button>
+                            <button class="btn btn--outline btn--sm" id="toggleFishZones">
+                                <i class="fas fa-fish"></i> Fish Zones
+                            </button>
+                            <button class="btn btn--outline btn--sm" id="toggleWeather">
+                                <i class="fas fa-cloud"></i> Weather
+                            </button>
+                        </div>
+                    </div>
+                    <div class="map-display">
+                        <div id="marineMapDisplay" class="map-canvas clickable-map" title="Open INCOIS Ocean Observing Network map">
+                            <!-- Interactive map will be rendered here -->
+                            <div class="map-placeholder">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <p>Interactive Marine Map</p>
+                                <p class="map-hint">Double Click to see more in detail</p>
+                                <div class="map-stations" id="mapStations"></div>
+                            </div>
+                        </div>
+                        <div class="map-sidebar">
+                            <div class="sidebar-section">
+                                <h4>Marine Stations</h4>
+                                <div id="stationsList" class="stations-list"></div>
+                            </div>
+                            <div class="sidebar-section">
+                                <h4>Legend</h4>
+                                <div class="legend-items">
+                                    <div class="legend-item">
+                                        <span class="legend-color coastal"></span>
+                                        <span>Coastal Stations</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color port"></span>
+                                        <span>Port Stations</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color deep-sea"></span>
+                                        <span>Deep Sea Stations</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fish Identification Section -->
+        <section id="fish-id" class="content-section">
+            <div class="container">
+                <div class="fish-id-container">
+                    <div class="upload-section">
+                        <h3>AI Fish Species Identification</h3>
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <h4>Upload Fish Image</h4>
+                            <p>Drag and drop an image or click to browse</p>
+                            <input type="file" id="fishImageInput" accept="image/*" hidden>
+                            <button class="btn btn--primary" onclick="document.getElementById('fishImageInput').click()">
+                                <i class="fas fa-upload"></i> Choose Image
+                            </button>
+                        </div>
+                        <div class="image-preview" id="imagePreview"></div>
+                    </div>
+                    
+                    <div class="identification-results" id="identificationResults">
+                        <h4>Identification Results</h4>
+                        <div class="results-placeholder">
+                            <i class="fas fa-fish"></i>
+                            <p>Upload an image to identify fish species</p>
+                        </div>
+                    </div>
+                    
+                    <div class="fish-database">
+                        <h4>Fish Species Database</h4>
+                        <div class="fish-grid" id="fishGrid"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weather Section -->
+        <section id="weather" class="content-section">
+            <div class="container">
+                <div class="weather-container">
+                    <div class="current-weather">
+                        <h3>Current Marine Weather</h3>
+                        <div class="weather-card current">
+                            <div class="weather-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <div class="weather-info">
+                                <h4>Today</h4>
+                                <p class="condition">Partly Cloudy</p>
+                                <div class="weather-details">
+                                    <span><i class="fas fa-wind"></i> 15 kt</span>
+                                    <span><i class="fas fa-water"></i> 2.1 m</span>
+                                    <span><i class="fas fa-eye"></i> Good</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="forecast-section">
+                        <h4>7-Day Marine Forecast</h4>
+                        <div class="forecast-grid" id="forecastGrid"></div>
+                    </div>
+                    
+                    <div class="fishing-recommendations">
+                        <h4>Fishing Recommendations</h4>
+                        <div class="recommendation-cards" id="recommendationCards"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sign In Modal -->
+    <div id="signInModal" class="modal hidden">
+        <div class="modal-overlay" onclick="closeModal('signInModal')"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Sign In to AquaScope Navigator</h3>
+                <button class="modal-close" onclick="closeModal('signInModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Email or Username</label>
+                    <input type="text" id="signInEmail" class="form-control" placeholder="Enter your email or username">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="signInPassword" class="form-control" placeholder="Enter your password">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="rememberMe">
+                        Remember me
+                    </label>
+                </div>
+                <div class="sign-in-options">
+                    <a href="#" class="forgot-password">Forgot your password?</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--outline" onclick="closeModal('signInModal')">Cancel</button>
+                <button class="btn btn--primary" onclick="handleSignIn()">Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden">
+        <div class="modal-overlay" onclick="closeModal('settingsModal')"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button class="modal-close" onclick="closeModal('settingsModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <h4>Appearance</h4>
+                    <div class="setting-item">
+                        <label>Theme</label>
+                        <select class="form-control" id="themeSelect">
+                            <option value="auto">Auto</option>
+                            <option value="light">Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>Language</label>
+                        <select class="form-control" id="settingsLanguage">
+                            <option value="en">English</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="hi">हिंदी</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="kn">ಕನ್ನಡ</option>
+                            <option value="ml">മലയാളം</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h4>Accessibility</h4>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="highContrast">
+                            High Contrast Mode
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="reduceMotion">
+                            Reduce Motion
+                        </label>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h4>Notifications</h4>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="weatherAlerts" checked>
+                            Weather Alerts
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="safetyAlerts" checked>
+                            Safety Alerts
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--outline" onclick="closeModal('settingsModal')">Cancel</button>
+                <button class="btn btn--primary" onclick="saveSettings()">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification System -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- Floating Fish Animation -->
+    <div class="floating-fish">
+        <i class="fas fa-fish fish-1"></i>
+        <i class="fas fa-fish fish-2"></i>
+        <i class="fas fa-fish fish-3"></i>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
