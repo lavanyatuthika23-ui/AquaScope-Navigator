@@ -383,15 +383,20 @@ class AquaScopeApp {
         }
     }
 
-    processVoiceCommand(transcript) {
-        this.addMessage(transcript, 'user');
-        
-        // Simulate AI response based on command
-        setTimeout(() => {
-            const response = this.generateAIResponse(transcript);
-            this.addMessage(response, 'assistant');
-        }, 1000);
-    }
+   async processVoiceCommand(transcript) {
+  this.addMessage(transcript, "user");
+  try {
+    const res = await fetch("https://sih-1-backend.onrender.com/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: transcript })
+    });
+    const data = await res.json();
+    this.addMessage(data.reply, "assistant");
+  } catch (err) {
+    this.addMessage("Error connecting to AI service", "assistant");
+  }
+}
 
     generateAIResponse(input) {
         const lowerInput = input.toLowerCase();
