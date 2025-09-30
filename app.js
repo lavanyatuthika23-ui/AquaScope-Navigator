@@ -463,6 +463,7 @@ async sendMessage() {
 }
 
 
+
     addMessage(text, type) {
         const messagesContainer = document.getElementById('chatMessages');
         const messageDiv = document.createElement('div');
