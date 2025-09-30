@@ -440,23 +440,28 @@ class AquaScopeApp {
         document.getElementById('inputSuggestions').classList.remove('show');
         this.sendMessage();
     }
+async sendMessage() {
+  const input = document.getElementById("chatInput");
+  const message = input.value.trim();
+  if (!message) return;
 
-    sendMessage() {
-        const input = document.getElementById('chatInput');
-        const message = input.value.trim();
-        
-        if (!message) return;
+  this.addMessage(message, "user");
+  input.value = "";
+  document.getElementById("inputSuggestions").classList.remove("show");
 
-        this.addMessage(message, 'user');
-        input.value = '';
-        document.getElementById('inputSuggestions').classList.remove('show');
+  try {
+    const res = await fetch("https://sih-1-backend.onrender.com/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
+    });
+    const data = await res.json();
+    this.addMessage(data.reply, "assistant");
+  } catch (err) {
+    this.addMessage("Error connecting to AI service", "assistant");
+  }
+}
 
-        // Simulate AI response
-        setTimeout(() => {
-            const response = this.generateAIResponse(message);
-            this.addMessage(response, 'assistant');
-        }, 1000);
-    }
 
     addMessage(text, type) {
         const messagesContainer = document.getElementById('chatMessages');
