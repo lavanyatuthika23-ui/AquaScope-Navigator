@@ -7,7 +7,7 @@ class AquaScopeApp {
         this.recognition = null;
         this.charts = {};
         this.inputField = document.getElementById('chatInput');
-this.sendButton = document.getElementById('sendButton');
+
 
 if (this.sendButton) {
   this.sendButton.addEventListener('click', () => this.sendMessage());
@@ -194,6 +194,21 @@ if (this.sendButton) {
         // Chat
         document.getElementById('sendBtn').addEventListener('click', () => {
             this.sendMessage();
+            this.inputField = document.getElementById('chatInput');
+this.sendButton = document.getElementById('sendBtn');
+
+// Enter key support
+this.inputField.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') this.sendMessage();
+});
+
+// Disable send button when input is empty
+this.sendButton.disabled = !this.inputField.value.trim();
+this.inputField.addEventListener('input', () => {
+  this.sendButton.disabled = !this.inputField.value.trim();
+});
+
+            
         });
 
         document.getElementById('chatInput').addEventListener('keypress', (e) => {
@@ -475,6 +490,7 @@ if (this.sendButton) {
     }
 async sendMessage() {
   this.inputField = document.getElementById('chatInput');
+  const input = this.inputField.value.trim();
   if (!input) return;
 
   this.addMessage(input, "user");
@@ -509,6 +525,7 @@ async sendMessage() {
         const messagesContainer = document.getElementById('chatMessages');
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${type}-message`;
+
 
         const avatar = document.createElement('div');
         avatar.className = 'message-avatar';
