@@ -466,7 +466,7 @@ class AquaScopeApp {
         this.sendMessage();
     }
 async sendMessage() {
-  const input = this.inputField.value.trim();
+  this.inputField = document.getElementById('chatInput');
   if (!input) return;
 
   this.addMessage(input, "user");
