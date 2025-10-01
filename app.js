@@ -446,24 +446,32 @@ class AquaScopeApp {
         this.sendMessage();
     }
 async sendMessage() {
-  const input = document.getElementById("chatInput");
-  const message = input.value.trim();
-  if (!message) return;
+  const input = this.inputField.value.trim();
+  if (!input) return;
 
-  this.addMessage(message, "user");
-  input.value = "";
-  document.getElementById("inputSuggestions").classList.remove("show");
+  this.addMessage(input, "user");
+  this.inputField.value = "";
 
   try {
     const res = await fetch("https://sih-1-backend.onrender.com/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message })
+      body: JSON.stringify({ message: input })
     });
+
     const data = await res.json();
-    this.addMessage(data.reply, "assistant");
+
+    if (data.reply) {
+      this.addMessage(data.reply, "assistant");
+    } else if (data.error) {
+      this.addMessage("⚠️ Error: " + (data.error.message || "Unknown error"), "assistant");
+    } else {
+      this.addMessage("⚠️ Unexpected response from server", "assistant");
+      console.log("Unexpected response:", data);
+    }
   } catch (err) {
-    this.addMessage("Error connecting to AI service", "assistant");
+    console.error("Fetch error:", err);
+    this.addMessage("⚠️ Could not reach server", "assistant");
   }
 }
 
