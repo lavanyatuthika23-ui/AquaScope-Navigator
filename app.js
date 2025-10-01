@@ -383,7 +383,7 @@ class AquaScopeApp {
         }
     }
 
-   async processVoiceCommand(transcript) {
+ async processVoiceCommand(transcript) {
   this.addMessage(transcript, "user");
   try {
     const res = await fetch("https://sih-1-backend.onrender.com/chat", {
@@ -396,16 +396,26 @@ class AquaScopeApp {
 
     // 🔊 Speak the reply aloud ONLY for voice input
     if (data.reply) {
-      // Cancel any ongoing speech before starting new
+      // stop any in-flight speech
       speechSynthesis.cancel();
+
+      // create an utterance with the right language
       const utterance = new SpeechSynthesisUtterance(data.reply);
-      utterance.lang = this.getVoiceLang(); // use your language mapping
+      utterance.lang = this.getVoiceLang();
+
+      // optional: choose a voice matching the lang
+      const voices = speechSynthesis.getVoices();
+      const match = voices.find(v => v.lang === utterance.lang);
+      if (match) utterance.voice = match;
+
       speechSynthesis.speak(utterance);
     }
   } catch (err) {
+    console.error("Voice command error:", err);
     this.addMessage("Error connecting to AI service", "assistant");
   }
 }
+
 
 
     generateAIResponse(input) {
