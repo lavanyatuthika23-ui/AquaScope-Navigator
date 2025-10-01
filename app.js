@@ -393,10 +393,20 @@ class AquaScopeApp {
     });
     const data = await res.json();
     this.addMessage(data.reply, "assistant");
+
+    // 🔊 Speak the reply aloud ONLY for voice input
+    if (data.reply) {
+      // Cancel any ongoing speech before starting new
+      speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(data.reply);
+      utterance.lang = this.getVoiceLang(); // use your language mapping
+      speechSynthesis.speak(utterance);
+    }
   } catch (err) {
     this.addMessage("Error connecting to AI service", "assistant");
   }
 }
+
 
     generateAIResponse(input) {
         const lowerInput = input.toLowerCase();
