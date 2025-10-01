@@ -6,6 +6,13 @@ class AquaScopeApp {
         this.isListening = false;
         this.recognition = null;
         this.charts = {};
+        this.inputField = document.getElementById('chatInput');
+this.sendButton = document.getElementById('sendButton');
+
+if (this.sendButton) {
+  this.sendButton.addEventListener('click', () => this.sendMessage());
+}
+
         
         // Application data
         this.data = {
@@ -78,6 +85,7 @@ class AquaScopeApp {
     }
 
     async init() {
+        
         this.showLoadingScreen();
         await this.simulateLoading();
         this.hideLoadingScreen();
