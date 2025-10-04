@@ -1101,6 +1101,41 @@ function handleSignIn() {
     }, 1500);
 }
 
+//for register
+document.getElementById('registerBtn')?.addEventListener('click', function() {
+  app.openModal('registerModal');
+});
+
+function handleRegister() {
+    const name = document.getElementById('registerName').value.trim();
+    const email = document.getElementById('registerEmail').value.trim();
+    const password = document.getElementById('registerPassword').value;
+    const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+    if (!name || !email || !password || !confirmPassword) {
+        app.showNotification('Please fill in all fields', 'error');
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        app.showNotification('Passwords do not match', 'error');
+        return;
+    }
+
+    // Simulate registration process
+    app.showNotification('Registering your account...', 'info');
+    setTimeout(() => {
+        app.showNotification('Registration successful! You can now sign in.', 'success');
+        app.closeModal('registerModal');
+        // Optionally clear form fields
+        document.getElementById('registerName').value = '';
+        document.getElementById('registerEmail').value = '';
+        document.getElementById('registerPassword').value = '';
+        document.getElementById('registerConfirmPassword').value = '';
+    }, 1500);
+}
+
+
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.app = new AquaScopeApp();
