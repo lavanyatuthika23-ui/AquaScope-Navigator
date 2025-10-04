@@ -91,8 +91,9 @@
                     </button>
                     <button id="signInBtn" class="btn btn--primary sign-in-btn">
                         <i class="fas fa-sign-in-alt"></i>
-                        <span>Sign In</span>
+                        <span>Log In</span>
                     </button>
+                    <button id="registerBtn" class="btn btn--primary"><span>Register</span></button>
                     <button id="settingsBtn" class="control-btn">
                         <i class="fas fa-cog"></i>
                     </button>
@@ -368,7 +369,7 @@
         <div class="modal-overlay" onclick="closeModal('signInModal')"></div>
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Sign In to AquaScope Navigator</h3>
+                <h3>Log In to AquaScope Navigator</h3>
                 <button class="modal-close" onclick="closeModal('signInModal')">
                     <i class="fas fa-times"></i>
                 </button>
@@ -394,11 +395,57 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn--outline" onclick="closeModal('signInModal')">Cancel</button>
-                <button class="btn btn--primary" onclick="handleSignIn()">Sign In</button>
+                <button class="btn btn--primary" onclick="handleSignIn()">Log In</button>
             </div>
         </div>
     </div>
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal hidden">
+        <div class="modal-overlay" onclick="closeModal('registerModal')"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Register for AquaScope Navigator</h3>
+                <button class="modal-close" onclick="closeModal('registerModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" id="registerName" class="form-control" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="registerEmail" class="form-control" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" id="registerUsername" class="form-control" placeholder="Choose a username">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="registerPassword" class="form-control" placeholder="Create a password">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" id="registerConfirmPassword" class="form-control" placeholder="Confirm your password">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="registerTerms">
+                        I agree to the <a href="#">Terms & Conditions</a>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--outline" onclick="closeModal('registerModal')">Cancel</button>
+                <button class="btn btn--primary" onclick="handleRegisterSubmit()">Register</button>
+            </div>
+        </div>
+    </div>
+   
 
+    
     <!-- Settings Modal -->
     <div id="settingsModal" class="modal hidden">
         <div class="modal-overlay" onclick="closeModal('settingsModal')"></div>
